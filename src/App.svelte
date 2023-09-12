@@ -45,7 +45,7 @@
       <p>Copyright © 2021 - All rights reserved</p>
     </div>
     <div class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
-      <a href="https://twitter.com/gunnerwhocodes" target="_blank" class="twitter">
+      <a href="https://twitter.com/tobiasRParent" target="_blank" class="twitter">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
