@@ -8,7 +8,6 @@
   import SongControls from "../SongControls/SongControls.svelte";
 
   import { formatChordSheet, transposeDown, transposeUp, getChords } from "../../services/music/chordSheetTransforms";
-  import { onMount } from "svelte";
   import { instruments } from "../../services/music/musicUtils";
 
   const song = `{title: Bare Necessities}
@@ -87,7 +86,9 @@ const switchInstrumentsFn = (instrument)=>{
 <div class='song-container'>
   <SongControls {transposeUpFn} {transposeDownFn} {instruments} {switchInstrumentsFn} />
   <ChordSheetViewer {chordSheet} mode='text'/>
-  <ChordListViewer instrument={currentInstrument} {chords} />
+  <div class='chords-container'>
+    <ChordListViewer instrument={currentInstrument} {chords} />
+  </div>
 </div>
 
 <style>
@@ -107,7 +108,7 @@ const switchInstrumentsFn = (instrument)=>{
   .song-container :global(.songsheet-panel) {
     grid-area: song;
   }
-  .song-container :global(.chords-list-panel){
+  .song-container .chords-container{
     grid-area: chords;
   }
 </style>
