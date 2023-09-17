@@ -10,7 +10,7 @@
   import { formatChordSheet, transposeDown, transposeUp, getChords } from "../../services/music/chordSheetTransforms";
   import { instruments } from "../../services/music/musicUtils";
 
-  const song = `{title: Bare Necessities}
+  export let song = `{title: Bare Necessities}
 {subtitle: }
 {composer: Terry Gilkyson}
 Instrumental intro

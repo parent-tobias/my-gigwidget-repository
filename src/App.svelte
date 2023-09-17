@@ -1,12 +1,10 @@
 <script>
-
-  import logo from "./assets/svelte.png";
   import AccordionMenu from "./components/AccordionMenu/AccordionMenu.svelte";
   import AccordionMenuItem from "./components/AccordionMenu/AccordionMenuItem.svelte";
-  import ChordChart from "./components/ChordChart/ChordChart.svelte";
   import SongViewer from "./components/SongViewer/SongViewer.svelte";
-  import Chord from "./lib/Chord/Chord.svelte";
+  import FileList from "./components/FileList/FileList.svelte";
 
+  import {state as fileSystemState, openFolder, getEntriesRecursivelyFromHandles} from './services/filesystem';
   import { keys } from "./services/music/musicUtils";
   
 
@@ -16,6 +14,11 @@
     console.log(key);
     selectedKey = key
   };
+
+  const handleDirectorySelector = async ()=>{
+    await openFolder();
+  }
+
 </script>
 
 <main class='drawer'>
@@ -67,11 +70,8 @@
     <div class='bg-slate-400 h-full'>
       <AccordionMenu>
         <AccordionMenuItem title='Songs' selected=true>
-          <ul>
-            <li>Bare Necessities</li>
-            <li>House at Pooh Corner</li>
-            <li>If I Only Had a Brain</li>
-          </ul>
+          <button class='btn btn-primary' on:click={handleDirectorySelector}>Choose Directory</button>
+          <FileList  />
         </AccordionMenuItem>
         <AccordionMenuItem title='Chords'>
           <ul>

@@ -1,6 +1,7 @@
-import Observable from "./Observable";
+import Observable from "./Observable.js";
+import * as fs from 'native-file-system-adapter';
 
-export const state = Observable({
+export let state = Observable({
   rootDirhandle: null,
   activeWorkingHandle: null,
   activeWorkingSidebarNode: null,
@@ -13,7 +14,7 @@ export const handleFileSelection = (entry, sidebarNode) => {
       openFile(entry, sidebarNode);
     }
   } else {
-    openFile(entry, sideBarNode);
+    openFile(entry, sidebarNode);
   }
 }
 
@@ -25,7 +26,7 @@ export const openFile = async (entry, sidebarNode) => {
   }
 
   state.value = {
-    ...state, 
+    ...state.value, 
     activeWorkingHandle: entry,
     activeSidebarNode: sidebarNode
   }
@@ -43,16 +44,20 @@ export const openFile = async (entry, sidebarNode) => {
 }
 
 export const openFolder  = async () => {
-  state.rootDirHandle = await window.showDirectoryPicker({
-    types: [
+  const rootDirHandle = await fs.showDirectoryPicker(/*{
+    accepts: [
       {
-        description: 'Chordpro files',
+        description: 'ChordPro Files',
         accept: {
-          'text/chordpro': ['.chordpro'],
+          'text/markdown': ['.chordpro','.pro']
         }
       }
     ]
-  });
+  } */);
+  state.value = {
+    ...state.value,
+    rootDirHandle
+  };
 
   // do something with the directory handle. Likely want to set
   //  some reactive datastore of file/directory handles?
@@ -78,19 +83,13 @@ export const getFileContentsForHandle = async (handle) => {
   return contents;
 }
 
-const getEntriesRecursivelyFromHandles = async (handles) => {
+export const getEntriesRecursivelyFromHandles = async (handles) => {
+  if(!handles) return;
   const entries = [];
-
   for await (const entry of handles) {
     const {kind} = entry;
 
     switch(kind) {
-      case 'file':
-        entries.push({
-          kind, 
-          entry
-        });
-        break;
       case 'directory':
         const directoryHandles = entry.values();
 
@@ -102,25 +101,25 @@ const getEntriesRecursivelyFromHandles = async (handles) => {
           ).catch(console.error),
         });
         break;
-    }
+        case 'file':
+        default:
+          entries.push({
+            kind, 
+            entry
+          });
+          break;
+      }
   }
-
-  return entries.sort((a, b)=>a.kind.localeCompare(b.kind));
+console.log('entries is ',entries)
+  return entries?.sort((a, b)=>a.kind.localeCompare(b.kind) || a.entry.name.localeCompare(b.entry.name));
 }
 
-const createEntry = async (entry) => {
+const createEntry = async (contents, entry) => {
   try {
-    await self.showSaveFilePicker({
-      startIn: entry,
+    const fileHandle = await fs.showSaveFilePicker({
+      _preferPolyfill: false,
       suggestedName: 'untitled.chordpro',
-      types: [
-        {
-          description: 'Chordpro files',
-          accept: {
-            'text/chordpro': ['.chordpro']
-          },
-        },
-      ],
+      accepts: ['.chordpro','.pro'],
     });
 
     console.info(`Created ${entry.name}`);
@@ -135,7 +134,7 @@ const createEntry = async (entry) => {
 const removeEntry = async (entry) => {
   const {kind, name} = entry;
 
-  if(window.confirm('Are you sure you want to delete this ${kind}?'){
+  if(window.confirm('Are you sure you want to delete this ${kind}?')){
     try {
       await entry.remove();
       console.info(`${name} removed successfully.`);
@@ -143,5 +142,5 @@ const removeEntry = async (entry) => {
       console.error(`Something went wrong in removing ${entry.name}`)
       console.error(error);
     }
-  })
+  }
 }

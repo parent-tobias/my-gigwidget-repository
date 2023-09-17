@@ -21,6 +21,7 @@
     "chordjs": "^2.0.1",
     "chordsheetjs": "^8.1.0",
     "idb": "^7.1.1",
+    "native-file-system-adapter": "^3.0.0",
     "svguitar": "^2.2.2",
     "tailwindcss": "^3.3.3"
   }
