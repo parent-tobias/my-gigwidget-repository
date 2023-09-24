@@ -4,7 +4,8 @@
   import SongViewer from "./components/SongViewer/SongViewer.svelte";
   import FileList from "./components/FileList/FileList.svelte";
 
-  import {state as fileSystemState, openFolder, getEntriesRecursivelyFromHandles} from './services/filesystem';
+  import {state as fileSystemState, openFolder, getEntriesRecursivelyFromHandles, openFile} from './services/filesystem';
+  import { songText as song } from "./services/stores";
   import { keys } from "./services/music/musicUtils";
   
 
@@ -18,6 +19,13 @@
   const handleDirectorySelector = async ()=>{
     await openFolder();
   }
+
+  const handleFileSelection = async(fileHandle) => {
+    const songString = await openFile(fileHandle);
+    song.set( songString );
+    console.log(song);
+  }
+
 
 </script>
 
@@ -71,7 +79,7 @@
       <AccordionMenu>
         <AccordionMenuItem title='Songs' selected=true>
           <button class='btn btn-primary' on:click={handleDirectorySelector}>Choose Directory</button>
-          <FileList  />
+          <FileList {handleFileSelection} />
         </AccordionMenuItem>
         <AccordionMenuItem title='Chords'>
           <ul>

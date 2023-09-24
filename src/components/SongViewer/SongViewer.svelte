@@ -10,62 +10,13 @@
   import { formatChordSheet, transposeDown, transposeUp, getChords } from "../../services/music/chordSheetTransforms";
   import { instruments } from "../../services/music/musicUtils";
 
-  export let song = `{title: Bare Necessities}
-{subtitle: }
-{composer: Terry Gilkyson}
-Instrumental intro
-{chorus}
-[D7]Look for the [G]bare necessities, the [C]simple bare necessities,
-[G]Forget about your [E7]worries and your [A7]strife [D7]
-I[G] mean the [G7]bare necessities, old [C]Mother Nature's [C7]recipes,
-that [G]brings the [E7]bare ne[A7]cessi[D7-alt]ties of [G]life [C7] [G]
+  import {songText} from '../../services/stores';
 
-Wherever I [D7]wander, wherever I [G]roam,
-I couldn't be [D7]fonder of my big [G]home
-The [G7]bees are [C]buzzin' in the [Cm]tree,
-To make some [G]honey just for [A7]me
-When [Em7]you look under the [E7]rocks and plants,
-and [Am7]take a glance at the [D7]fancy ants,
-Then [G]maybe try a [E7]few [E7]
-The bare ne[Am7]cessities of [D7]life will come to [G]you
-
-{chorus}
-[D7]Look for the [G]bare necessities, the [C]simple bare necessities,
-[G]Forget about your [E7]worries and your [A7]strife [D7]
-I[G] mean the [G7]bare necessities, they're [C]why a bear can [C7]rest at ease,
-with [G]just the [E7]bare ne[A7]cessi[D7-alt]ties of [G]life [C7] [G]
-
-Now when you pick a [D7]pawpaw, or a prickly [G]pear,
-And you prick a [D7]raw paw, the next time [G]beware -
-Don't [G7]pick the [C]prickly pear by the [Cm]paw,
-When you pick a [G]pear, try to use the [A7]claw.
-But [Em7]you don't need to [E7]use the claw
-When [Am7]you pick a pear of the [D7]big pawpaw
-Have [G]I given you a [E7]clue? [E7]
-The bare ne[Am7]cessities of [D7]life will come to [G]you...
-they'll [D7]come to [G] you!
-
-Instrumental verse, lines 1 – 4
-
-So just [D7]try and relax, yeah cool it, fall apart in my backyard.
-Cause let me tell you [G]something, little britches.
-If you [D7]act like that bee acts, [G]uh uh, you're working too hard [G7]
-And don't spend your [C]time lookin' a[Cm]round,
-For something you [G]want that can't be [A7]found
-When [Em7]you find out you can [E7]live without it,
-And [Am7] go along not [D7]thinkin' about it.
-I'll [G]tell you something [E7]true - [E7]
-The bare ne[Am7]cessities of [D7]life will come to [G]you.
-
-{chorus}
-[D7]Look for the [G]bare necessities, the [C]simple bare necessities,
-[G]Forget about your [E7]worries and your [A7]strife [D7]
-I[G] mean the [G7]bare necessities, they're [C]why a bear can [C7]rest at ease,
-with [G]just the [E7]bare ne[A7]cessi[D7-alt]ties of [G]life [C7] [G]
-`;
+  // let song = $songText;
 
 let currentInstrument = instruments[0].name;
-let chordSheet = formatChordSheet(song);
+
+$: chordSheet = formatChordSheet($songText);
 $: chords = getChords(chordSheet);
 
 const transposeUpFn = ()=>{
@@ -80,6 +31,7 @@ const transposeDownFn = () => {
 const switchInstrumentsFn = (instrument)=>{
   currentInstrument = instrument;
 }
+
 
 </script>
 

@@ -13,6 +13,7 @@
   let container;
 
   const showChord =()=>{
+    
     const instrumentObject = instruments.find(({name})=>name===instrument)
 
     const chordFinder = chordOnInstrument(
@@ -22,6 +23,9 @@
     // given the chord name (G7, Bbmin), we need the notes in the chord
     const chordObject = chordToNotes(chord);
 
+    if(!chordObject) return;
+
+    
     const chartSettings = systemDefaultChords[instrument] && systemDefaultChords[instrument][chord]?
       systemDefaultChords[instrument][chord] : 
       {

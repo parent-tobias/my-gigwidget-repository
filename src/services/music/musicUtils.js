@@ -110,8 +110,9 @@ export const parseChords = (string)=>{
  *****/
 export const chordOnInstrument = (instrument) =>
   (chord) => {
-    // console.log(instrument, chord);
 
+    if(!chord) return;
+    
     const {strings} = instrument;
     return [...strings].reverse().map((note, index)=>{
       let fret = 0;
@@ -131,8 +132,12 @@ export const chordOnInstrument = (instrument) =>
  *****/
 export const findBase = (note)=>notes.findIndex((tone)=> tone.includes(note) )
 
-export const chordToNotes = (chordName) => {
-  const [,{key, chord, alt}] = Array.from(parseChords(`[${chordName}]`))[0];
+export const chordToNotes = (chordName) => {  
+  const chordData = Array.from(parseChords(`[${chordName}]`));
+
+  if(!chordData || !chordData.length) return;
+
+  const [,{key, chord, alt}] = chordData[0];
   const {accidental} = keys.find(
     (keySignature)=>keySignature.key===key
   );

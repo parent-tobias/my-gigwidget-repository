@@ -1,26 +1,30 @@
 <script>
   import FileDetail from "./FileDetail.svelte";
   export let directory;
+  export let handleFileSelection=()=>{};
 
-  console.log(`in DirectoryDetail: `, directory);
 </script>
-
+{#if !directory}
+  <div>...loading...</div>
+{:else } 
 <div class='file-directory-detail'>
   <h3>{directory.entry.name}</h3>
   <ul>
     {#if directory.entries?.length}
       {#each directory.entries as listing}
         {#if listing.kind==='directory'}
-        <svelte:self directory={listing} />
+        <svelte:self {handleFileSelection} directory={listing} />
         {:else}
         {#if listing.entry}
-          <FileDetail file={listing.entry} />
+          <FileDetail {handleFileSelection} file={listing.entry} />
         {/if}
         {/if}
       {/each}
     {/if}
   </ul>  
 </div>
+  
+{/if}
 
 <style>
   * {

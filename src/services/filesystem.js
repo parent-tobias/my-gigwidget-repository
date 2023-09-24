@@ -1,15 +1,21 @@
-import Observable from "./Observable.js";
+import {
+  rootDirHandle,
+  activeWorkingHandle,
+  activeWorkingSidebarNode,
+  hasChanges
+} from './stores';
 import * as fs from 'native-file-system-adapter';
 
-export let state = Observable({
-  rootDirhandle: null,
-  activeWorkingHandle: null,
-  activeWorkingSidebarNode: null,
-  hasChanges:false,
-});
+
+export let state = {
+  rootDirHandle,
+  activeWorkingHandle,
+  activeWorkingSidebarNode,
+  hasChanges,
+};
 
 export const handleFileSelection = (entry, sidebarNode) => {
-  if(state.value.hasChanges) {
+  if(state.hasChanges) {
     if(window.confirm('You have unsaved work. Are you sure you want to discard it?')) {
       openFile(entry, sidebarNode);
     }
@@ -18,21 +24,24 @@ export const handleFileSelection = (entry, sidebarNode) => {
   }
 }
 
+export const getFileContentsForHandle = async (handle) => {
+  const file  =await handle.getFile();
+  const contents = await file.text();
+
+  return contents;
+}
+
+
 export const openFile = async (entry, sidebarNode) => {
-  state.value = {...state.value, hasChanges: false};
+  state.hasChanges.set(false);
 
-  if(state.value.activeSidebarNode){
-    state.value.activeSidebarNode.dataset.isActive = 'false'
+  if(state.activeSidebarNode){
+    state.activeSidebarNode.dataset.isActive = 'false'
   }
 
-  state.value = {
-    ...state.value, 
-    activeWorkingHandle: entry,
-    activeSidebarNode: sidebarNode
-  }
-
-  state.value.activeSidebarNode.dataset.isActive = 'true'
-
+  state.activeWorkingHandle.set(entry);
+  state.activeWorkingSidebarNode.set(sidebarNode);
+  
   try {
     const contents = await getFileContentsForHandle(entry);
 
@@ -54,10 +63,7 @@ export const openFolder  = async () => {
       }
     ]
   } */);
-  state.value = {
-    ...state.value,
-    rootDirHandle
-  };
+  state.rootDirHandle.set(rootDirHandle);
 
   // do something with the directory handle. Likely want to set
   //  some reactive datastore of file/directory handles?
@@ -73,20 +79,14 @@ export const saveFileForHandle = async(handle, contents) => {
     console.warn(error);
   }
 
-  state.value = {...state, hasChanges: false};
-}
-
-export const getFileContentsForHandle = async (handle) => {
-  const file  =await handle.getFile();
-  const contents = await file.text();
-
-  return contents;
+  state.hasChanges.set(false);
 }
 
 export const getEntriesRecursivelyFromHandles = async (handles) => {
   if(!handles) return;
   const entries = [];
   for await (const entry of handles) {
+    if(!entry) continue;
     const {kind} = entry;
 
     switch(kind) {
@@ -110,7 +110,6 @@ export const getEntriesRecursivelyFromHandles = async (handles) => {
           break;
       }
   }
-console.log('entries is ',entries)
   return entries?.sort((a, b)=>a.kind.localeCompare(b.kind) || a.entry.name.localeCompare(b.entry.name));
 }
 
