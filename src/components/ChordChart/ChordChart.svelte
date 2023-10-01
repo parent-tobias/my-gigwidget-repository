@@ -22,6 +22,6 @@ import {chords, instruments} from '../../services/music/musicUtils';
 
 <style>
   article :global(.chart) {
-    width: 4em;
+    flex: 1 1 25vw;
   }
 </style>
