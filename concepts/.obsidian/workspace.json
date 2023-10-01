@@ -1,0 +1,165 @@
+{
+  "main": {
+    "id": "3818cf39f0b886f1",
+    "type": "split",
+    "children": [
+      {
+        "id": "43f95107228afc02",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1e4e54799eadb195",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {}
+            }
+          },
+          {
+            "id": "a1d98be77dec27c7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "100-components-and-tasks.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "8594ba7c19479a66",
+    "type": "split",
+    "children": [
+      {
+        "id": "038cf1d67343a8f8",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e3b2a7997ddb4fcc",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "aa325e4fda16bb59",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "93526b07f044f608",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "bb684dfb85a2b234",
+    "type": "split",
+    "children": [
+      {
+        "id": "e241c85a15e58544",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7276d86ffd6e2748",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "100-components-and-tasks.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "bf7f99303d18c430",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "100-components-and-tasks.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "2f9a24ae22d21357",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "7d2666313c9b917c",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "100-components-and-tasks.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "a1d98be77dec27c7",
+  "lastOpenFiles": [
+    "100-components-and-tasks.md",
+    "001-basics-of-music-as-math.md",
+    "002-from-strings-to-chords.md",
+    "README.md"
+  ]
+}

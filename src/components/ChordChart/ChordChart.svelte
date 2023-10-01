@@ -19,3 +19,9 @@ import {chords, instruments} from '../../services/music/musicUtils';
     {/each}
   </div>
 </article>
+
+<style>
+  article :global(.chart) {
+    width: 4em;
+  }
+</style>

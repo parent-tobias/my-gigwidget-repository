@@ -1,6 +1,7 @@
 <script>
   import AccordionMenu from "./components/AccordionMenu/AccordionMenu.svelte";
   import AccordionMenuItem from "./components/AccordionMenu/AccordionMenuItem.svelte";
+  import ChordChart from "./components/ChordChart/ChordChart.svelte";
   import SongViewer from "./components/SongViewer/SongViewer.svelte";
   import FileList from "./components/FileList/FileList.svelte";
 
@@ -11,9 +12,16 @@
 
   let selectedKey='A';
 
+  let component = SongViewer;
+  let props = {};
+
   const handleSelectKey = (key)=>{
     console.log(key);
     selectedKey = key
+
+    component=ChordChart;
+    props={key: selectedKey};
+
   };
 
   const handleDirectorySelector = async ()=>{
@@ -24,6 +32,9 @@
     const songString = await openFile(fileHandle);
     song.set( songString );
     console.log(song);
+
+    component=SongViewer;
+    props={};
   }
 
 
@@ -48,7 +59,8 @@
       </svg></label>
     <!-- Page content here-->
     <!-- <ChordChart key={selectedKey} /> -->
-    <SongViewer />
+    <!-- <SongViewer /> -->
+    <svelte:component this={component} {...props} />
   
   <footer class="items-center p-4 footer bg-neutral text-neutral-content">
     <div class="items-center grid-flow-col">
@@ -123,5 +135,8 @@
     p {
       max-width: none;
     }
+  }
+  .drawer-content {
+    margin: 1rem 2rem;
   }
 </style>
