@@ -8,6 +8,7 @@
   import {state as fileSystemState, openFolder, getEntriesRecursivelyFromHandles, openFile} from './services/filesystem';
   import { songText as song } from "./services/stores";
   import { keys } from "./services/music/musicUtils";
+  import KeyChordChart from "./components/KeyChordChart/KeyChordChart.svelte";
   
 
   let selectedKey='A';
@@ -21,7 +22,14 @@
 
     component=ChordChart;
     props={key: selectedKey};
+  };
 
+  const handleSelectScale = (key)=>{
+    console.log(key);
+    selectedKey = key
+
+    component=KeyChordChart;
+    props={key: selectedKey};
   };
 
   const handleDirectorySelector = async ()=>{
@@ -106,7 +114,19 @@
             {/each}
           </ul>
         </AccordionMenuItem>
-      </AccordionMenu>
+        <AccordionMenuItem title='Scale Chords'>
+          <ul>
+            {#each keys as keynote}
+            <li>
+              <button 
+                class='w-full' 
+                on:click={()=>handleSelectScale(keynote.key)}>
+                {keynote.key}
+              </button>
+            </li>
+            {/each}
+          </ul>
+        </AccordionMenuItem>      </AccordionMenu>
     </div>
 </div>
 

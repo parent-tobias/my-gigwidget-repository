@@ -1,21 +1,21 @@
 export const keys = [
-  {key: "A", accidental: "#"},
-  {key: "A#", accidental: "#"},
-  {key: "Bb", accidental: 'b'},
-  {key: "B", accidental: "#"},
-  {key: "C", accidental: "b"},
-  {key: "C#", accidental: "#"},
-  {key: "Db", accidental: "b"},
-  {key: "D", accidental: "#"},
-  {key: "D#", accidental: "#"},
-  {key: "Eb", accidental: "b"},
-  {key: "E", accidental: "#"},
-  {key: "F", accidental: "b"},
-  {key: "F#", accidental: "#"},
-  {key: "Gb", accidental: "b"},
-  {key: "G", accidental: "#"},
-  {key: "G#", accidental: "#"},
-  {key: "Ab", accidental: "b"}
+  {key: "A", accidental: "#", relativeMinor: 'F#'},
+  {key: "A#", accidental: "#", relativeMinor: 'G'},
+  {key: "Bb", accidental: 'b', relativeMinor: 'G'},
+  {key: "B", accidental: "#", relativeMinor: 'G#'},
+  {key: "C", accidental: "b", relativeMinor: 'A'},
+  {key: "C#", accidental: "#", relativeMinor: 'A#'},
+  {key: "Db", accidental: "b", relativeMinor: 'Bb'},
+  {key: "D", accidental: "#", relativeMinor: 'B'},
+  {key: "D#", accidental: "#", relativeMinor: 'C'},
+  {key: "Eb", accidental: "b", relativeMinor: 'C'},
+  {key: "E", accidental: "#", relativeMinor: 'C#'},
+  {key: "F", accidental: "b", relativeMinor: 'D'},
+  {key: "F#", accidental: "#", relativeMinor: 'D#'},
+  {key: "Gb", accidental: "b", relativeMinor: 'Eb'},
+  {key: "G", accidental: "#", relativeMinor: 'E'},
+  {key: "G#", accidental: "#", relativeMinor: 'F'},
+  {key: "Ab", accidental: "b", relativeMinor: 'F'}
 ];
 export const notes = [
   ["A"],
@@ -68,9 +68,14 @@ export const scales = [
   { variant: "minor pentatonic", tones: [0, 3, 5, 7, 10] },
   { variant: "blues", tones: [0, 3, 5, 6, 7, 10] }
 ];
+export const chordsPerScale = [
+  {variant: 'major', chords: ['maj','min','min','maj','maj','min','dim']},
+  {variant: 'minor', chords: ['min','dim','maj','min','min','maj','maj']}
+]
 export const instruments = [
   { name: 'Standard Ukulele', strings: ["G","C","E","A"], frets: 19},
   { name: 'Baritone Ukulele', strings: ["D","G","B","E"], frets: 19},
+  { name: '5ths tuned Ukulele', strings: ["C","G","D","A"], frets: 19},
   { name: 'Standard Guitar', strings: ["E","A","D","G","B","E"], frets: 15},
   { name: 'Drop-D Guitar', strings: ["D","A","D","G","B","E"], frets: 15},
   { name: 'Standard Mandolin', strings: ["G","D","A","E"], frets: 20}
@@ -151,4 +156,22 @@ export const chordToNotes = (chordName) => {
           arr[0])
         )
   })
+}
+
+export const scaleTones = (base, variant) =>{
+  // given a base note, and a variant (major/minor/?), we can return the tones
+  //  in a given scale.
+  const baseIndex = findBase(base);
+  const {accidental} = keys.find(
+    (keySignature)=>keySignature.key===base
+  );
+  const noteNames = scales.find(({variant: variantName})=>variantName===variant)
+    .tones.map(
+      (interval)=>notes[(interval+baseIndex)%notes.length]
+      .find((note, _, arr) => arr.length > 1 && accidental ?
+          note.endsWith(accidental) :
+          arr[0])
+    );
+
+  return noteNames;
 }

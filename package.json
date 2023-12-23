@@ -20,6 +20,7 @@
     "bootstrap-icons": "^1.10.5",
     "chordjs": "^2.0.1",
     "chordsheetjs": "^8.1.0",
+    "dexie": "^4.0.1-alpha.25",
     "idb": "^7.1.1",
     "native-file-system-adapter": "^3.0.0",
     "svguitar": "^2.2.2",
